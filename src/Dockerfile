@@ -3,14 +3,14 @@ FROM debian:stable-slim
 RUN apt update
 RUN apt install -y \
     curl \
-    unzip
-RUN mkdir -p /root/.oh-my-posh/
-RUN curl https://ohmyposh.dev/install.sh >> /root/.oh-my-posh/install.sh
-RUN rm -rf /root/themes/
-RUN bash /root/.oh-my-posh/install.sh -d /root/.oh-my-posh/
-RUN curl -s https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/kushal.omp.json >> /root/.oh-my-posh/kushal.omp.json
-RUN echo export PATH=/root/.oh-my-posh/:$PATH >> /root/.bashrc
-RUN echo 'eval "$(oh-my-posh --init --shell bash --config /root/.oh-my-posh/kushal.omp.json)"' >> /root/.bashrc
+    unzip \
+    wget
+RUN curl -s https://gist.githubusercontent.com/mfedatto/475a009c0713428503fed83b62a3a2e4/raw/6275e85e643244be535f288b2b8c62e6562adb1f/mfedatto-omp-bash.sh | bash
+RUN curl -s https://gist.githubusercontent.com/mfedatto/475a009c0713428503fed83b62a3a2e4/raw/6275e85e643244be535f288b2b8c62e6562adb1f/mfedatto-context.sh | bash -s -- \
+    docker \
+    \\#e5f2fc \
+    \\#00084d
+
 RUN apt install -y deborphan
 RUN deborphan | xargs apt -y remove --purge
 RUN apt autoremove -y
